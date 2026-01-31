@@ -386,6 +386,35 @@ def liot(image, window_size=3):
     
     return liot_image
 
+def apply_circular_mask(image, mask):
+    """
+    Apply a circular mask to the image and mask.
+    Inside the circle: fully visible
+    Outside the circle: 10% visible in image, completely black (0) in mask
+    """
+    h, w = image.shape[:2]
+    center_x = w // 2 + random.randint(-w//8, w//8)  # Slight randomness in center position
+    center_y = h // 2 + random.randint(-h//8, h//8)
+    
+    # Random radius between 35% to 45% of the smaller dimension
+    min_dim = min(h, w)
+    radius = random.randint(int(min_dim * 0.35), int(min_dim * 0.45))
+    
+    # Create circular mask
+    y_grid, x_grid = np.ogrid[:h, :w]
+    distances = np.sqrt((x_grid - center_x)**2 + (y_grid - center_y)**2)
+    circle_mask = distances <= radius
+    
+    # Apply to image: outside is 10% visible (multiply by 0.1)
+    image_with_circle = image.copy()
+    image_with_circle[~circle_mask] = (image_with_circle[~circle_mask] * 0.1).astype(np.uint8)
+    
+    # Apply to mask: outside is completely black (0)
+    mask_with_circle = mask.copy()
+    mask_with_circle[~circle_mask] = 0
+    
+    return image_with_circle, mask_with_circle
+
 def Generate_layers(image, mask):
     # Random number of fractures and shapes
     num_fractures = random.randint(0, 10)
@@ -403,7 +432,7 @@ def Generate_layers(image, mask):
             image, mask = draw_shape(image, mask, shape, gray)
 
     # Create drawing plan
-    draw_steps = ['shape'] * num_shapes + ['fracture'] * num_fractures
+    draw_steps = ['fracture'] * num_fractures
     # random.shuffle(draw_steps)
 
     for step in draw_steps:
@@ -464,6 +493,8 @@ if background:
                 image = cv2.resize(img, (img_size, img_size))
                 mask = np.zeros((img_size, img_size), dtype=np.uint8)
                 image, mask = Generate_layers(image, mask)
+                # Apply circular mask
+                image, mask = apply_circular_mask(image, mask)
                 # image = liot(image, window_size=random.choice([3,5,7])) #, random.choice([3,5,7])
                 # Save result
                 cv2.imwrite(f"{output_dir}/images/{i}_{filename}", image)
@@ -480,6 +511,8 @@ else:
         mask = np.zeros((img_size, img_size), dtype=np.uint8)
 
         image, mask = Generate_layers(image, mask)
+        # Apply circular mask
+        image, mask = apply_circular_mask(image, mask)
         # image = liot(image)
         # Save final image and mask
         cv2.imwrite(f"{output_dir}/images/image_{i:03d}.png", image)
