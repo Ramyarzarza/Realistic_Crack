@@ -10,7 +10,7 @@ img_size = 800
 output_dir = "Data/Generalized_dataset"
 input_dir = "./output_images/"  # Directory with .tif images
 background = False
-num_images = 30
+num_images = 300
 thickness_range = (1, 9)
 color_range = (0, 149)
 
@@ -289,6 +289,30 @@ def draw_shape(image, mask, shape_type, gray):
         cv2.circle(shape_img, center, radius, gray, -1)
         cv2.circle(shape_mask, center, radius, 255, -1)
 
+    elif shape_type == 'spot':
+        # Irregular organic spot: distorted ellipse polygon
+        cx = random.randint(0, img_size - 1)
+        cy = random.randint(0, img_size - 1)
+        rx = random.randint(2, 18)
+        ry = int(rx * random.uniform(0.4, 1.6))
+        rot = random.uniform(0, 2 * np.pi)
+        cos_r, sin_r = np.cos(rot), np.sin(rot)
+        num_pts = random.randint(10, 22)
+        pts = []
+        for k in range(num_pts):
+            theta = 2 * np.pi * k / num_pts
+            # Radial perturbation for irregular edge
+            r = 1.0 + random.uniform(-0.4, 0.4)
+            ex = r * rx * np.cos(theta)
+            ey = r * ry * np.sin(theta)
+            px = int(np.clip(cx + ex * cos_r - ey * sin_r, 0, img_size - 1))
+            py = int(np.clip(cy + ex * sin_r + ey * cos_r, 0, img_size - 1))
+            pts.append([px, py])
+        pts = np.array(pts, dtype=np.int32)
+        cv2.fillPoly(shape_img, [pts], gray)
+        cv2.fillPoly(shape_mask, [pts], 255)
+
+
     if shape_type == 'circle':
         center = (random.randint(0, img_size - 1), random.randint(0, img_size - 1))
         radius = random.randint(10, img_size // 6)
@@ -427,7 +451,7 @@ def Generate_layers(image, mask):
 
     for step in draw_steps:
         if step == 'shape':
-            shape = random.choice(['smallcircle'])
+            shape = random.choice(['smallcircle', 'spot'])
             gray = random.randint(0, 255)
             image, mask = draw_shape(image, mask, shape, gray)
 
