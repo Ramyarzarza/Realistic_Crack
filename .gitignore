@@ -5,5 +5,5 @@
 /.ipynb_checkpoints
 /predictions
 .DS_Store
-/sample_split
 /predictions_split
+/samples_split

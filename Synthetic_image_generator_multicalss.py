@@ -13,6 +13,7 @@ background = False
 num_images = 300
 thickness_range = (1, 5)
 color_range = (0, 255)
+opacity_range = (0.2, 1.0)
 
 BACKGROUND_CLASS = 0
 LINE_CLASS = 255
@@ -21,6 +22,19 @@ SHAPE_CLASS = 125
 # Create output directories
 os.makedirs(f"{output_dir}/images", exist_ok=True)
 os.makedirs(f"{output_dir}/masks", exist_ok=True)
+
+
+def blend_with_opacity(base_image, overlay_image, overlay_mask, opacity):
+    blended = base_image.copy().astype(np.float32)
+    visible_pixels = overlay_mask > 0
+
+    if np.any(visible_pixels):
+        blended[visible_pixels] = (
+            base_image[visible_pixels].astype(np.float32) * (1.0 - opacity)
+            + overlay_image[visible_pixels].astype(np.float32) * opacity
+        )
+
+    return np.clip(blended, 0, 255).astype(np.uint8)
 
 # ===== BACKGROUND GENERATION FUNCTIONS =====
 
@@ -273,14 +287,20 @@ def draw_branch(img, mask, x, y, angle, length, depth, thickness, color):
     angle_variation = 0.5  # Radians
     end_x = int(x + length * np.cos(angle))
     end_y = int(y + length * np.sin(angle))
-    cv2.line(img, (x, y), (end_x, end_y), color, thickness)
-    cv2.line(mask, (x, y), (end_x, end_y), LINE_CLASS, thickness)
+    branch_img = np.zeros_like(img, dtype=np.uint8)
+    branch_mask = np.zeros_like(mask, dtype=np.uint8)
+    cv2.line(branch_img, (x, y), (end_x, end_y), color, thickness)
+    cv2.line(branch_mask, (x, y), (end_x, end_y), LINE_CLASS, thickness)
+    img = blend_with_opacity(img, branch_img, branch_mask, random.uniform(*opacity_range))
+    mask = np.where(branch_mask > 0, branch_mask, mask)
     
     num_children = random.choice([1, 2])  # Can branch into 1 or 2
     for _ in range(num_children):
         new_angle = angle + random.uniform(-angle_variation, angle_variation)
         new_length = random.randint(*length_range)
-        draw_branch(img, mask, end_x, end_y, new_angle, new_length, depth - 1, thickness, color)
+        img, mask = draw_branch(img, mask, end_x, end_y, new_angle, new_length, depth - 1, thickness, color)
+
+    return img, mask
 
 def draw_shape(image, mask, shape_type, gray):
     img_size = image.shape[0]  # Ensure img_size is defined based on input image
@@ -347,8 +367,10 @@ def draw_shape(image, mask, shape_type, gray):
         cv2.fillPoly(shape_img, [pts], gray)
         cv2.fillPoly(shape_mask, [pts], SHAPE_CLASS)
 
-    # Combine shape with original image
-    image = np.where(shape_img > 0, shape_img, image)
+    opacity = random.uniform(*opacity_range)
+
+    # Combine shape with original image using a random opacity per object.
+    image = blend_with_opacity(image, shape_img, shape_mask, opacity)
     mask = np.where(shape_mask > 0, shape_mask, mask)
 
     return image, mask
@@ -476,7 +498,8 @@ def Generate_layers(image, mask):
             else:  # 15% straight lines
                 obj, obj_mask = random_line_fracture(img_size, gray_color)
 
-            image = np.where(obj > 0, obj, image)
+            opacity = random.uniform(*opacity_range)
+            image = blend_with_opacity(image, obj, obj_mask, opacity)
             mask = np.where(obj_mask > 0, obj_mask, mask)
 
         elif step == 'shape':
