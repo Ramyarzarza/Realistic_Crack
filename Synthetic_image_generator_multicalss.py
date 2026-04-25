@@ -11,7 +11,7 @@ output_dir = "Data/Generalized_dataset"
 input_dir = "./output_images/"  # Directory with .tif images
 background = False
 num_images = 300
-thickness_range = (1, 9)
+thickness_range = (1, 5)
 color_range = (0, 255)
 
 BACKGROUND_CLASS = 0
@@ -48,7 +48,7 @@ def generate_perlin_texture(size, octaves=4, scale=100):
 def generate_concrete_texture(size):
     """Generate concrete-like texture with varied grain"""
     # Base layer
-    base = np.random.randint(100, 200, (size, size), dtype=np.uint8)
+    base = np.random.randint(0, 255, (size, size), dtype=np.uint8)
     
     # Add fine grain
     fine_grain = np.random.normal(0, 15, (size, size))
@@ -71,7 +71,7 @@ def generate_concrete_texture(size):
 def generate_asphalt_texture(size):
     """Generate asphalt-like texture"""
     # Dark base
-    base = np.random.randint(40, 90, (size, size), dtype=np.uint8)
+    base = np.random.randint(0, 255, (size, size), dtype=np.uint8)
     
     # Add aggregate stones
     for _ in range(random.randint(100, 300)):
@@ -170,7 +170,7 @@ def realistic_crack_fracture(size, gray_color):
     x, y = random.randint(size // 4, 3 * size // 4), random.randint(size // 4, 3 * size // 4)
     
     # Main crack parameters
-    main_length = random.randint(150, 600)
+    main_length = random.randint(20, 600)
     base_thickness = random.randint(*thickness_range)
     
     # Direction bias for more natural cracks
@@ -201,7 +201,7 @@ def realistic_crack_fracture(size, gray_color):
         cv2.line(mask, (x, y), (new_x, new_y), LINE_CLASS, current_thickness)
         
         # Add branching with low probability
-        if random.random() < 0.01 and i > 20:  # 1% chance after initial segment
+        if random.random() < 0.02 and i > 20:  # 2% chance after initial segment
             branch_angle = angle + random.choice([-1, 1]) * random.uniform(0.3, 0.8)
             branch_length = random.randint(20, 100)
             branch_thickness = max(1, current_thickness - random.randint(1, 2))
@@ -530,11 +530,19 @@ if background:
 else:
     for i in tqdm(range(num_images), desc="Generating realistic crack dataset with diverse backgrounds"):
         # Generate diverse synthetic background instead of solid color
-        image = generate_textured_background(img_size)
+        # image = generate_textured_background(img_size)
         
         # Adjust color range based on background brightness
         # bg_mean = np.mean(image)
         # color_range = (max(0, int(bg_mean - 80)), int(bg_mean - 10))
+
+
+        bg_color = random.randint(0, 255)
+        # color_range = (0, bg_color - 1)
+        image = np.full((img_size, img_size), bg_color, dtype=np.uint8)
+        # generate random pixel background
+        # image = np.random.randint(0, 256, (img_size, img_size), dtype=np.uint8)
+        mask = np.zeros((img_size, img_size), dtype=np.uint8)
         
         mask = np.zeros((img_size, img_size), dtype=np.uint8)
 
