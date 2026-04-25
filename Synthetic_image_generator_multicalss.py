@@ -9,7 +9,7 @@ from skimage import exposure
 img_size = 800
 output_dir = "Data/Generalized_dataset"
 input_dir = "./output_images/"  # Directory with .tif images
-background = False
+background = True
 num_images = 300
 thickness_range = (1, 5)
 color_range = (0, 255)

@@ -7,3 +7,4 @@
 .DS_Store
 /predictions_split
 /samples_split
+/output_images
