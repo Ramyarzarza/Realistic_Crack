@@ -14,6 +14,7 @@ num_images = 300
 thickness_range = (1, 5)
 color_range = (0, 255)
 opacity_range = (0.2, 1.0)
+soft_edge_probability = 0.4
 
 BACKGROUND_CLASS = 0
 LINE_CLASS = 255
@@ -34,6 +35,18 @@ def blend_with_opacity(base_image, overlay_image, overlay_mask, opacity):
             + overlay_image[visible_pixels].astype(np.float32) * opacity
         )
 
+    return np.clip(blended, 0, 255).astype(np.uint8)
+
+
+def blend_with_soft_edges(base_image, overlay_image, overlay_mask, opacity, blur_kernel):
+    alpha = (overlay_mask > 0).astype(np.float32)
+    alpha = cv2.GaussianBlur(alpha, (blur_kernel, blur_kernel), 0)
+    alpha = np.clip(alpha * opacity, 0.0, 1.0)
+
+    blended = (
+        base_image.astype(np.float32) * (1.0 - alpha)
+        + overlay_image.astype(np.float32) * alpha
+    )
     return np.clip(blended, 0, 255).astype(np.uint8)
 
 # ===== BACKGROUND GENERATION FUNCTIONS =====
@@ -371,9 +384,12 @@ def draw_shape(image, mask, shape_type, gray):
         cv2.fillPoly(shape_mask, [pts], SHAPE_CLASS)
 
     opacity = random.uniform(*opacity_range)
+    if random.random() < soft_edge_probability:
+        edge_blur = random.choice([7, 11, 15])
+        image = blend_with_soft_edges(image, shape_img, shape_mask, opacity, edge_blur)
+    else:
+        image = blend_with_opacity(image, shape_img, shape_mask, opacity)
 
-    # Combine shape with original image using a random opacity per object.
-    image = blend_with_opacity(image, shape_img, shape_mask, opacity)
     mask = np.where(shape_mask > 0, shape_mask, mask)
 
     return image, mask
@@ -502,7 +518,10 @@ def Generate_layers(image, mask):
                 obj, obj_mask = random_line_fracture(img_size, gray_color)
 
             opacity = random.uniform(*opacity_range)
-            image = blend_with_opacity(image, obj, obj_mask, opacity)
+            if random.random() < soft_edge_probability:
+                image = blend_with_soft_edges(image, obj, obj_mask, opacity, random.choice([3, 5, 7]))
+            else:
+                image = blend_with_opacity(image, obj, obj_mask, opacity)
             mask = np.where(obj_mask > 0, obj_mask, mask)
 
         elif step == 'shape':
