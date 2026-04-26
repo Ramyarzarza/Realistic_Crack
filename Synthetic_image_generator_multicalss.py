@@ -9,7 +9,7 @@ from skimage import exposure
 img_size = 800
 output_dir = "Data/Generalized_dataset"
 input_dir = "./output_images/"  # Directory with .tif images
-background = True
+background = False
 num_images = 300
 thickness_range = (1, 5)
 color_range = (0, 255)
@@ -186,6 +186,7 @@ def realistic_crack_fracture(size, gray_color):
     # Main crack parameters
     main_length = random.randint(20, 600)
     base_thickness = random.randint(*thickness_range)
+    color_jitter_range = (-50, 50)
     
     # Direction bias for more natural cracks
     preferred_angle = random.uniform(0, 2 * np.pi)
@@ -210,8 +211,9 @@ def realistic_crack_fracture(size, gray_color):
         # Variable thickness along crack
         thickness_variation = random.uniform(0.5, 1.5)
         current_thickness = max(1, int(base_thickness * thickness_variation))
+        segment_color = int(np.clip(gray_color + random.randint(*color_jitter_range), 0, 255))
         
-        cv2.line(img, (x, y), (new_x, new_y), gray_color, current_thickness)
+        cv2.line(img, (x, y), (new_x, new_y), segment_color, current_thickness)
         cv2.line(mask, (x, y), (new_x, new_y), LINE_CLASS, current_thickness)
         
         # Add branching with low probability
@@ -229,8 +231,9 @@ def realistic_crack_fracture(size, gray_color):
                 
                 bnew_x = int(np.clip(bx + bdx, 0, size - 1))
                 bnew_y = int(np.clip(by + bdy, 0, size - 1))
+                branch_color = int(np.clip(segment_color + random.randint(-12, 12), 0, 255))
                 
-                cv2.line(img, (bx, by), (bnew_x, bnew_y), gray_color, branch_thickness)
+                cv2.line(img, (bx, by), (bnew_x, bnew_y), branch_color, branch_thickness)
                 cv2.line(mask, (bx, by), (bnew_x, bnew_y), LINE_CLASS, branch_thickness)
                 
                 bx, by = bnew_x, bnew_y
