@@ -30,8 +30,8 @@ from tqdm import tqdm
 # ── Configuration ──────────────────────────────────────────────────────────
 SAMPLES_DIR  = "./samples"       # real unlabeled images
 OUTPUT_DIR   = "Data/FDA_dataset"
-NUM_IMAGES   = 300               # total composites to generate
-FDA_L        = 0.3               # paper value: L=0.3 (load_frame_fakevessel_gaussian)
+NUM_IMAGES   = 300              # total composites to generate
+FDA_L        = 0.3               # paper value from load_frame_fakevessel_gaussian
 # ──────────────────────────────────────────────────────────────────────────
 
 
@@ -225,9 +225,14 @@ def generate_fda_composite(real_img, crack_mask, L=FDA_L):
     """
     h, w = real_img.shape
 
-    # Step 1 — synthetic line image (random intensity lines on light background)
-    synth = np.full((h, w), 200.0, dtype=np.float32)
-    synth[crack_mask > 0] = float(np.random.randint(50, 200))
+    # Step 1 — synthetic line image (bright lines on dark background).
+    # Using dark background + bright lines ensures lines remain visible after
+    # FDA maps the image toward the (typically dark) real X-ray target domain.
+    real_mean = float(real_img.mean())
+    bg_val    = max(0.0, real_mean - 20.0)          # slightly below real mean
+    line_val  = min(255.0, real_mean + 160.0)        # well above real mean
+    synth = np.full((h, w), bg_val, dtype=np.float32)
+    synth[crack_mask > 0] = line_val
 
     # Expand to (1, H, W) — paper processes (C, H, W) arrays
     im_src = synth[np.newaxis, :, :]                            # (1,H,W)
