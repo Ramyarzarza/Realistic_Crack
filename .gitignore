@@ -17,3 +17,5 @@ output_images.zip
 output_images/
 output_images.zip
 .DS_Store
+/Unsupervised methods/output
+/.vscode
