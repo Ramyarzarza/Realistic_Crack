@@ -31,7 +31,7 @@ from tqdm import tqdm
 SAMPLES_DIR  = "./samples"       # real unlabeled images
 OUTPUT_DIR   = "Data/FDA_dataset"
 NUM_IMAGES   = 300              # total composites to generate
-FDA_L        = 0.3               # paper value from load_frame_fakevessel_gaussian
+FDA_L        = 0.01               # paper value from load_frame_fakevessel_gaussian
 # ──────────────────────────────────────────────────────────────────────────
 
 
@@ -230,7 +230,8 @@ def generate_fda_composite(real_img, crack_mask, L=FDA_L):
     # FDA maps the image toward the (typically dark) real X-ray target domain.
     real_mean = float(real_img.mean())
     bg_val    = max(0.0, real_mean - 20.0)          # slightly below real mean
-    line_val  = min(255.0, real_mean + 160.0)        # well above real mean
+    offset    = float(np.random.randint(100, 201))           # random offset: 100–200
+    line_val  = min(255.0, real_mean + offset)           # well above real mean
     synth = np.full((h, w), bg_val, dtype=np.float32)
     synth[crack_mask > 0] = line_val
 

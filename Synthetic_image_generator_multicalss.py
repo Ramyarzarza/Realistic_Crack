@@ -2,14 +2,20 @@ import numpy as np
 import cv2
 import random
 import os
+import glob
 from tqdm import tqdm
 from skimage import exposure
+from FreeCOS_FDA_generator import generate_fda_composite
 
 # Parameters
 img_size = 1600
-output_dir = "Data/Generalized_dataset"
+output_dir = "Data/fda_realistic"
+samples_dir = "./samples"                         # real images used as FDA target
 input_dir = "./output_images/"  # Directory with .tif images
-background = True
+# mode: "simple"  — solid random-colour background
+#        "real"   — real blurred background images from input_dir
+#        "fda"    — FDA adaptation: mask onto real sample images
+mode = "fda"
 num_images = 300
 thickness_range = (1, 5)
 color_range = (0, 255)
@@ -22,7 +28,7 @@ SHAPE_CLASS = 125
 
 # Create output directories
 os.makedirs(f"{output_dir}/images", exist_ok=True)
-os.makedirs(f"{output_dir}/masks", exist_ok=True)
+os.makedirs(f"{output_dir}/masks",  exist_ok=True)
 
 
 def blend_with_opacity(base_image, overlay_image, overlay_mask, opacity):
@@ -554,47 +560,62 @@ def Generate_layers(image, mask):
     return image, mask
 
 # --- Main Processing Loop ---
-if background:
-    for filename in tqdm(os.listdir(input_dir)):
+# Pre-load real sample images for the FDA pipeline
+_sample_paths = sorted(
+    glob.glob(os.path.join(samples_dir, "*.png")) +
+    glob.glob(os.path.join(samples_dir, "*.jpg")) +
+    glob.glob(os.path.join(samples_dir, "*.tif"))
+)
+_sample_imgs = [
+    cv2.resize(cv2.imread(p, cv2.IMREAD_GRAYSCALE), (img_size, img_size))
+    for p in _sample_paths
+    if cv2.imread(p, cv2.IMREAD_GRAYSCALE) is not None
+]
+
+# ── Mode 1: simple background ──────────────────────────────────────────────
+if mode == "simple":
+    for i in tqdm(range(num_images), desc="Simple background"):
+        bg_color = random.randint(0, 255)
+        image = np.full((img_size, img_size), bg_color, dtype=np.uint8)
+        mask  = np.zeros((img_size, img_size), dtype=np.uint8)
+        image, mask = Generate_layers(image, mask)
+        cv2.imwrite(f"{output_dir}/images/image_{i:03d}.png", image)
+        cv2.imwrite(f"{output_dir}/masks/mask_{i:03d}.png",   mask)
+
+# ── Mode 2: real background (blurred real images from input_dir) ───────────
+elif mode == "real":
+    for filename in tqdm(os.listdir(input_dir), desc="Real background"):
         if filename.lower().endswith(".jpg"):
             for i in range(1):
                 path = os.path.join(input_dir, filename)
-                img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
+                img  = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
                 if img is None:
                     continue
-                # Resize to 448x448
                 image = cv2.resize(img, (img_size, img_size))
-                mask = np.zeros((img_size, img_size), dtype=np.uint8)
+                mask  = np.zeros((img_size, img_size), dtype=np.uint8)
                 image, mask = Generate_layers(image, mask)
-                # Apply circular mask
                 # image, mask = apply_circular_mask(image, mask)
-                # image = liot(image, window_size=random.choice([3,5,7])) #, random.choice([3,5,7])
-                # Save result
+                # image = liot(image, window_size=random.choice([3,5,7]))
                 cv2.imwrite(f"{output_dir}/images/{i}_{filename}", image)
-                cv2.imwrite(f"{output_dir}/masks/{i}_{filename}", mask)
-else:
-    for i in tqdm(range(num_images), desc="Generating realistic crack dataset with diverse backgrounds"):
-        # Generate diverse synthetic background instead of solid color
-        # image = generate_textured_background(img_size)
-        
-        # Adjust color range based on background brightness
-        # bg_mean = np.mean(image)
-        # color_range = (max(0, int(bg_mean - 80)), int(bg_mean - 10))
+                cv2.imwrite(f"{output_dir}/masks/{i}_{filename}",  mask)
 
-
-        bg_color = random.randint(0, 255)
-        # color_range = (0, bg_color - 1)
-        image = np.full((img_size, img_size), bg_color, dtype=np.uint8)
-        # generate random pixel background
-        # image = np.random.randint(0, 256, (img_size, img_size), dtype=np.uint8)
-        mask = np.zeros((img_size, img_size), dtype=np.uint8)
-        
-        mask = np.zeros((img_size, img_size), dtype=np.uint8)
-
+# ── Mode 3: FDA — generate mask with Generate_layers, adapt onto real image ─
+elif mode == "fda":
+    if not _sample_imgs:
+        raise RuntimeError(f"No sample images found in {samples_dir!r}")
+    for i in tqdm(range(num_images), desc="FDA real"):
+        real_sample = random.choice(_sample_imgs)
+        # Build crack mask on top of the real image (so layer colours match its tone)
+        image = real_sample.copy()
+        mask  = np.zeros((img_size, img_size), dtype=np.uint8)
         image, mask = Generate_layers(image, mask)
-        # Apply circular mask
-        # image, mask = apply_circular_mask(image, mask)
-        # image = liot(image)
-        # Save final image and mask
-        cv2.imwrite(f"{output_dir}/images/image_{i:03d}.png", image)
-        cv2.imwrite(f"{output_dir}/masks/mask_{i:03d}.png", mask)
+        # Adapt the mask back onto the (unmodified) real sample via FDA
+        if np.any(mask > 0):
+            fda_img, fda_mask = generate_fda_composite(real_sample, mask, L=round(random.uniform(0.1, 0.9), 2))
+        else:
+            fda_img,  fda_mask = real_sample.copy(), mask
+        cv2.imwrite(f"{output_dir}/images/image_{i:03d}.png", fda_img)
+        cv2.imwrite(f"{output_dir}/masks/mask_{i:03d}.png",   mask)
+
+else:
+    raise ValueError(f"Unknown mode {mode!r}. Choose 'simple', 'real', or 'fda'.")
