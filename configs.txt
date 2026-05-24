@@ -1,0 +1,2064 @@
+Config_number = "1"
+
+PATHS = {
+    "output_dir": "Data/generalized_dataset",      # generated images/masks
+    "samples_dir": "./samples",                    # real images used as FDA target
+    "input_dir": "./output_images/",               # real background source for mode='real'
+}
+
+RUN_CONFIG = {
+    "mode": "simple",                                 # 'simple' | 'real' | 'fda'
+    "num_images": 500,
+    "image_size": 800,
+}
+
+FDA_CONFIG = {
+    "L_range": (0.1, 0.9),
+    "L_round_digits": 2,
+}
+
+MASK_LABELS = {
+    "background": 0,
+    "line": 255,
+    "shape": 125,
+}
+
+NOISE_CONFIG = {
+    "apply_blur_probability": 0.2,
+    "blur_kernel_choices": [3, 5, 7],
+    "blur_sigma_range": (1, 2),
+    "apply_gaussian_probability": 0.1,
+    "apply_poisson_probability": 0.1,
+    "apply_salt_pepper_probability": 0.1,
+    "apply_speckle_probability": 0.1,
+    "gaussian_mean": 0,
+    "gaussian_std": 20,
+    "salt_pepper_amount": 0.02,
+    "salt_vs_pepper": 0.5,
+    "speckle_std": 0.2,
+}
+
+# ============================
+
+LAYER_ORDER_CONFIG = {
+    # True: all objects are interleaved randomly and opacity is forced to 1.0.
+    # False: non-fracture objects are drawn first, then fractures are added last.
+    "random_layer_order": False,
+}
+
+DRAWING_CONFIG = {
+    "thickness_range": (1, 5),
+    "color_range": (0, 255),
+    "bg_color_range": (0, 255),
+    "opacity_range": (0.2, 1.0),
+    "soft_edge_probability": 0.5,
+    "soft_edge_kernels": [3, 5, 7],
+    "shape_soft_edge_kernels": [7, 11, 15],
+}
+
+CRACK_CONFIG = {
+    "start_region_divisor": 4,                      # start in center-ish region
+    "main_length_range": (20, 600),
+    "color_jitter_range": (-50, 50),
+    "preferred_angle_range": (0, 2 * np.pi),
+    "angle_deviation": 0.3,
+    "preferred_angle_drift": (-0.1, 0.1),
+    "step_size_range": (1.0, 3.0),
+    "thickness_variation_range": (0.5, 1.5),
+    "branch_probability": 0.02,
+    "branch_after_step": 20,
+    "branch_side_choices": [-1, 1],
+    "branch_angle_range": (0.3, 0.8),
+    "branch_length_range": (20, 100),
+    "branch_thickness_drop_range": (1, 2),
+    "branch_angle_jitter": (-0.2, 0.2),
+    "branch_step_range": (0.8, 2.0),
+    "branch_color_jitter": (-12, 12),
+    "edge_margin": 1,
+}
+
+SHAPE_CONFIG = {
+    "smallcircle_radius_range": (1, 7),
+    "spot_radius_x_range": (2, 18),
+    "spot_radius_ratio_range": (0.4, 1.6),
+    "spot_point_count_range": (10, 22),
+    "spot_edge_perturbation": (-0.4, 0.4),
+    "circle_radius_min": 10,
+    "circle_radius_divisor": 6,
+    "square_side_range": (1, 4),                    # max side = img_size // divisor
+}
+
+LAYER_OBJECT_COUNTS = {
+    # You can set a fixed count (e.g., 0, 12) or a range tuple (min, max).
+    "fracture": (0, 20),
+    "smallcircle": (0, 500),
+    "spot": (0, 50),
+    "circle": (0, 0),
+    "rectangle": (0, 0),
+    "square": (0, 0),
+    "triangle": (0, 0),
+}
+
+
+==============================
+
+Config_number = "2"
+
+PATHS = {
+    "output_dir": "Data/generalized_dataset",      # generated images/masks
+    "samples_dir": "./samples",                    # real images used as FDA target
+    "input_dir": "./output_images/",               # real background source for mode='real'
+}
+
+RUN_CONFIG = {
+    "mode": "real",                                 # 'simple' | 'real' | 'fda'
+    "num_images": 500,
+    "image_size": 800,
+}
+
+FDA_CONFIG = {
+    "L_range": (0.1, 0.9),
+    "L_round_digits": 2,
+}
+
+MASK_LABELS = {
+    "background": 0,
+    "line": 255,
+    "shape": 125,
+}
+
+NOISE_CONFIG = {
+    "apply_blur_probability": 0.2,
+    "blur_kernel_choices": [3, 5, 7],
+    "blur_sigma_range": (1, 2),
+    "apply_gaussian_probability": 0.1,
+    "apply_poisson_probability": 0.1,
+    "apply_salt_pepper_probability": 0.1,
+    "apply_speckle_probability": 0.1,
+    "gaussian_mean": 0,
+    "gaussian_std": 20,
+    "salt_pepper_amount": 0.02,
+    "salt_vs_pepper": 0.5,
+    "speckle_std": 0.2,
+}
+
+# ============================
+
+LAYER_ORDER_CONFIG = {
+    # True: all objects are interleaved randomly and opacity is forced to 1.0.
+    # False: non-fracture objects are drawn first, then fractures are added last.
+    "random_layer_order": False,
+}
+
+DRAWING_CONFIG = {
+    "thickness_range": (1, 5),
+    "color_range": (0, 255),
+    "bg_color_range": (0, 255),
+    "opacity_range": (0.2, 1.0),
+    "soft_edge_probability": 0.5,
+    "soft_edge_kernels": [3, 5, 7],
+    "shape_soft_edge_kernels": [7, 11, 15],
+}
+
+CRACK_CONFIG = {
+    "start_region_divisor": 4,                      # start in center-ish region
+    "main_length_range": (20, 600),
+    "color_jitter_range": (-50, 50),
+    "preferred_angle_range": (0, 2 * np.pi),
+    "angle_deviation": 0.3,
+    "preferred_angle_drift": (-0.1, 0.1),
+    "step_size_range": (1.0, 3.0),
+    "thickness_variation_range": (0.5, 1.5),
+    "branch_probability": 0.02,
+    "branch_after_step": 20,
+    "branch_side_choices": [-1, 1],
+    "branch_angle_range": (0.3, 0.8),
+    "branch_length_range": (20, 100),
+    "branch_thickness_drop_range": (1, 2),
+    "branch_angle_jitter": (-0.2, 0.2),
+    "branch_step_range": (0.8, 2.0),
+    "branch_color_jitter": (-12, 12),
+    "edge_margin": 1,
+}
+
+SHAPE_CONFIG = {
+    "smallcircle_radius_range": (1, 7),
+    "spot_radius_x_range": (2, 18),
+    "spot_radius_ratio_range": (0.4, 1.6),
+    "spot_point_count_range": (10, 22),
+    "spot_edge_perturbation": (-0.4, 0.4),
+    "circle_radius_min": 10,
+    "circle_radius_divisor": 6,
+    "square_side_range": (1, 4),                    # max side = img_size // divisor
+}
+
+LAYER_OBJECT_COUNTS = {
+    # You can set a fixed count (e.g., 0, 12) or a range tuple (min, max).
+    "fracture": (0, 20),
+    "smallcircle": (0, 500),
+    "spot": (0, 50),
+    "circle": (0, 0),
+    "rectangle": (0, 0),
+    "square": (0, 0),
+    "triangle": (0, 0),
+}
+
+
+=============================
+
+Config_number = "3"
+
+PATHS = {
+    "output_dir": "Data/generalized_dataset",      # generated images/masks
+    "samples_dir": "./samples",                    # real images used as FDA target
+    "input_dir": "./output_images/",               # real background source for mode='real'
+}
+
+RUN_CONFIG = {
+    "mode": "simple",                                 # 'simple' | 'real' | 'fda'
+    "num_images": 500,
+    "image_size": 800,
+}
+
+FDA_CONFIG = {
+    "L_range": (0.1, 0.9),
+    "L_round_digits": 2,
+}
+
+MASK_LABELS = {
+    "background": 0,
+    "line": 255,
+    "shape": 125,
+}
+
+NOISE_CONFIG = {
+    "apply_blur_probability": 0.2,
+    "blur_kernel_choices": [3, 5, 7],
+    "blur_sigma_range": (1, 2),
+    "apply_gaussian_probability": 0.1,
+    "apply_poisson_probability": 0.1,
+    "apply_salt_pepper_probability": 0.1,
+    "apply_speckle_probability": 0.1,
+    "gaussian_mean": 0,
+    "gaussian_std": 20,
+    "salt_pepper_amount": 0.02,
+    "salt_vs_pepper": 0.5,
+    "speckle_std": 0.2,
+}
+
+# ============================
+
+LAYER_ORDER_CONFIG = {
+    # True: all objects are interleaved randomly and opacity is forced to 1.0.
+    # False: non-fracture objects are drawn first, then fractures are added last.
+    "random_layer_order": True,
+}
+
+DRAWING_CONFIG = {
+    "thickness_range": (1, 5),
+    "color_range": (0, 255),
+    "bg_color_range": (0, 255),
+    "opacity_range": (0.2, 1.0),
+    "soft_edge_probability": 0.5,
+    "soft_edge_kernels": [3, 5, 7],
+    "shape_soft_edge_kernels": [7, 11, 15],
+}
+
+CRACK_CONFIG = {
+    "start_region_divisor": 4,                      # start in center-ish region
+    "main_length_range": (20, 600),
+    "color_jitter_range": (-5, 5),
+    "preferred_angle_range": (0, 2 * np.pi),
+    "angle_deviation": 0.3,
+    "preferred_angle_drift": (-0.1, 0.1),
+    "step_size_range": (1.0, 3.0),
+    "thickness_variation_range": (0.5, 1.5),
+    "branch_probability": 0.02,
+    "branch_after_step": 20,
+    "branch_side_choices": [-1, 1],
+    "branch_angle_range": (0.3, 0.8),
+    "branch_length_range": (20, 100),
+    "branch_thickness_drop_range": (1, 2),
+    "branch_angle_jitter": (-0.2, 0.2),
+    "branch_step_range": (0.8, 2.0),
+    "branch_color_jitter": (-12, 12),
+    "edge_margin": 1,
+}
+
+SHAPE_CONFIG = {
+    "smallcircle_radius_range": (1, 7),
+    "spot_radius_x_range": (2, 18),
+    "spot_radius_ratio_range": (0.4, 1.6),
+    "spot_point_count_range": (10, 22),
+    "spot_edge_perturbation": (-0.4, 0.4),
+    "circle_radius_min": 10,
+    "circle_radius_divisor": 6,
+    "square_side_range": (1, 4),                    # max side = img_size // divisor
+}
+
+LAYER_OBJECT_COUNTS = {
+    # You can set a fixed count (e.g., 0, 12) or a range tuple (min, max).
+    "fracture": (0, 20),
+    "smallcircle": (0, 500),
+    "spot": (0, 50),
+    "circle": (0, 0),
+    "rectangle": (0, 0),
+    "square": (0, 0),
+    "triangle": (0, 0),
+}
+=======================
+
+Config_number = "4"
+
+PATHS = {
+    "output_dir": "Data/generalized_dataset",      # generated images/masks
+    "samples_dir": "./samples",                    # real images used as FDA target
+    "input_dir": "./output_images/",               # real background source for mode='real'
+}
+
+RUN_CONFIG = {
+    "mode": "real",                                 # 'simple' | 'real' | 'fda'
+    "num_images": 500,
+    "image_size": 800,
+}
+
+FDA_CONFIG = {
+    "L_range": (0.1, 0.9),
+    "L_round_digits": 2,
+}
+
+MASK_LABELS = {
+    "background": 0,
+    "line": 255,
+    "shape": 125,
+}
+
+NOISE_CONFIG = {
+    "apply_blur_probability": 0.2,
+    "blur_kernel_choices": [3, 5, 7],
+    "blur_sigma_range": (1, 2),
+    "apply_gaussian_probability": 0.1,
+    "apply_poisson_probability": 0.1,
+    "apply_salt_pepper_probability": 0.1,
+    "apply_speckle_probability": 0.1,
+    "gaussian_mean": 0,
+    "gaussian_std": 20,
+    "salt_pepper_amount": 0.02,
+    "salt_vs_pepper": 0.5,
+    "speckle_std": 0.2,
+}
+
+# ============================
+
+LAYER_ORDER_CONFIG = {
+    # True: all objects are interleaved randomly and opacity is forced to 1.0.
+    # False: non-fracture objects are drawn first, then fractures are added last.
+    "random_layer_order": True,
+}
+
+DRAWING_CONFIG = {
+    "thickness_range": (1, 5),
+    "color_range": (0, 255),
+    "bg_color_range": (0, 255),
+    "opacity_range": (0.2, 1.0),
+    "soft_edge_probability": 0.5,
+    "soft_edge_kernels": [3, 5, 7],
+    "shape_soft_edge_kernels": [7, 11, 15],
+}
+
+CRACK_CONFIG = {
+    "start_region_divisor": 4,                      # start in center-ish region
+    "main_length_range": (20, 600),
+    "color_jitter_range": (-5, 5),
+    "preferred_angle_range": (0, 2 * np.pi),
+    "angle_deviation": 0.3,
+    "preferred_angle_drift": (-0.1, 0.1),
+    "step_size_range": (1.0, 3.0),
+    "thickness_variation_range": (0.5, 1.5),
+    "branch_probability": 0.02,
+    "branch_after_step": 20,
+    "branch_side_choices": [-1, 1],
+    "branch_angle_range": (0.3, 0.8),
+    "branch_length_range": (20, 100),
+    "branch_thickness_drop_range": (1, 2),
+    "branch_angle_jitter": (-0.2, 0.2),
+    "branch_step_range": (0.8, 2.0),
+    "branch_color_jitter": (-12, 12),
+    "edge_margin": 1,
+}
+
+SHAPE_CONFIG = {
+    "smallcircle_radius_range": (1, 7),
+    "spot_radius_x_range": (2, 18),
+    "spot_radius_ratio_range": (0.4, 1.6),
+    "spot_point_count_range": (10, 22),
+    "spot_edge_perturbation": (-0.4, 0.4),
+    "circle_radius_min": 10,
+    "circle_radius_divisor": 6,
+    "square_side_range": (1, 4),                    # max side = img_size // divisor
+}
+
+LAYER_OBJECT_COUNTS = {
+    # You can set a fixed count (e.g., 0, 12) or a range tuple (min, max).
+    "fracture": (0, 20),
+    "smallcircle": (0, 500),
+    "spot": (0, 50),
+    "circle": (0, 0),
+    "rectangle": (0, 0),
+    "square": (0, 0),
+    "triangle": (0, 0),
+}
+
+
+========================
+
+Config_number = "5"
+
+PATHS = {
+    "output_dir": "Data/generalized_dataset",      # generated images/masks
+    "samples_dir": "./samples",                    # real images used as FDA target
+    "input_dir": "./output_images/",               # real background source for mode='real'
+}
+
+RUN_CONFIG = {
+    "mode": "real",                                 # 'simple' | 'real' | 'fda'
+    "num_images": 500,
+    "image_size": 800,
+}
+
+FDA_CONFIG = {
+    "L_range": (0.1, 0.9),
+    "L_round_digits": 2,
+}
+
+MASK_LABELS = {
+    "background": 0,
+    "line": 255,
+    "shape": 125,
+}
+
+NOISE_CONFIG = {
+    "apply_blur_probability": 0.2,
+    "blur_kernel_choices": [3, 5, 7],
+    "blur_sigma_range": (1, 2),
+    "apply_gaussian_probability": 0.1,
+    "apply_poisson_probability": 0.1,
+    "apply_salt_pepper_probability": 0.1,
+    "apply_speckle_probability": 0.1,
+    "gaussian_mean": 0,
+    "gaussian_std": 20,
+    "salt_pepper_amount": 0.02,
+    "salt_vs_pepper": 0.5,
+    "speckle_std": 0.2,
+}
+
+# ============================
+
+LAYER_ORDER_CONFIG = {
+    # True: all objects are interleaved randomly and opacity is forced to 1.0.
+    # False: non-fracture objects are drawn first, then fractures are added last.
+    "random_layer_order": True,
+}
+
+DRAWING_CONFIG = {
+    "thickness_range": (4, 10),
+    "color_range": (0, 255),
+    "bg_color_range": (0, 255),
+    "opacity_range": (0.2, 1.0),
+    "soft_edge_probability": 0.5,
+    "soft_edge_kernels": [3, 5, 7],
+    "shape_soft_edge_kernels": [7, 11, 15],
+}
+
+CRACK_CONFIG = {
+    "start_region_divisor": 4,                      # start in center-ish region
+    "main_length_range": (20, 600),
+    "color_jitter_range": (-5, 5),
+    "preferred_angle_range": (0, 2 * np.pi),
+    "angle_deviation": 0.3,
+    "preferred_angle_drift": (-0.1, 0.1),
+    "step_size_range": (1.0, 3.0),
+    "thickness_variation_range": (0.5, 1.5),
+    "branch_probability": 0.02,
+    "branch_after_step": 20,
+    "branch_side_choices": [-1, 1],
+    "branch_angle_range": (0.3, 0.8),
+    "branch_length_range": (20, 100),
+    "branch_thickness_drop_range": (1, 2),
+    "branch_angle_jitter": (-0.2, 0.2),
+    "branch_step_range": (0.8, 2.0),
+    "branch_color_jitter": (-12, 12),
+    "edge_margin": 1,
+}
+
+SHAPE_CONFIG = {
+    "smallcircle_radius_range": (1, 7),
+    "spot_radius_x_range": (2, 18),
+    "spot_radius_ratio_range": (0.4, 1.6),
+    "spot_point_count_range": (10, 22),
+    "spot_edge_perturbation": (-0.4, 0.4),
+    "circle_radius_min": 10,
+    "circle_radius_divisor": 6,
+    "square_side_range": (1, 4),                    # max side = img_size // divisor
+}
+
+LAYER_OBJECT_COUNTS = {
+    # You can set a fixed count (e.g., 0, 12) or a range tuple (min, max).
+    "fracture": (1, 5),
+    "smallcircle": (0, 500),
+    "spot": (0, 50),
+    "circle": (0, 0),
+    "rectangle": (0, 0),
+    "square": (0, 0),
+    "triangle": (0, 0),
+}
+
+===================================
+
+Config_number = "6"
+
+PATHS = {
+    "output_dir": "Data/generalized_dataset",      # generated images/masks
+    "samples_dir": "./samples",                    # real images used as FDA target
+    "input_dir": "./output_images/",               # real background source for mode='real'
+}
+
+RUN_CONFIG = {
+    "mode": "real",                                 # 'simple' | 'real' | 'fda'
+    "num_images": 500,
+    "image_size": 800,
+}
+
+FDA_CONFIG = {
+    "L_range": (0.1, 0.9),
+    "L_round_digits": 2,
+}
+
+MASK_LABELS = {
+    "background": 0,
+    "line": 255,
+    "shape": 125,
+}
+
+NOISE_CONFIG = {
+    "apply_blur_probability": 0.2,
+    "blur_kernel_choices": [3, 5, 7],
+    "blur_sigma_range": (1, 2),
+    "apply_gaussian_probability": 0.1,
+    "apply_poisson_probability": 0.1,
+    "apply_salt_pepper_probability": 0.1,
+    "apply_speckle_probability": 0.1,
+    "gaussian_mean": 0,
+    "gaussian_std": 20,
+    "salt_pepper_amount": 0.02,
+    "salt_vs_pepper": 0.5,
+    "speckle_std": 0.2,
+}
+
+# ============================
+
+LAYER_ORDER_CONFIG = {
+    # True: all objects are interleaved randomly and opacity is forced to 1.0.
+    # False: non-fracture objects are drawn first, then fractures are added last.
+    "random_layer_order": True,
+}
+
+DRAWING_CONFIG = {
+    "thickness_range": (4, 10),
+    "color_range": (0, 255),
+    "bg_color_range": (0, 255),
+    "opacity_range": (0.2, 1.0),
+    "soft_edge_probability": 0.5,
+    "soft_edge_kernels": [3, 5, 7],
+    "shape_soft_edge_kernels": [7, 11, 15],
+}
+
+CRACK_CONFIG = {
+    "start_region_divisor": 4,                      # start in center-ish region
+    "main_length_range": (20, 600),
+    "color_jitter_range": (-5, 5),
+    "preferred_angle_range": (0, 2 * np.pi),
+    "angle_deviation": 0.3,
+    "preferred_angle_drift": (-0.1, 0.1),
+    "step_size_range": (1.0, 3.0),
+    "thickness_variation_range": (0.5, 1.5),
+    "branch_probability": 0.02,
+    "branch_after_step": 20,
+    "branch_side_choices": [-1, 1],
+    "branch_angle_range": (0.3, 0.8),
+    "branch_length_range": (20, 100),
+    "branch_thickness_drop_range": (1, 2),
+    "branch_angle_jitter": (-0.2, 0.2),
+    "branch_step_range": (0.8, 2.0),
+    "branch_color_jitter": (-12, 12),
+    "edge_margin": 1,
+}
+
+SHAPE_CONFIG = {
+    "smallcircle_radius_range": (1, 7),
+    "spot_radius_x_range": (2, 18),
+    "spot_radius_ratio_range": (0.4, 1.6),
+    "spot_point_count_range": (10, 22),
+    "spot_edge_perturbation": (-0.4, 0.4),
+    "circle_radius_min": 10,
+    "circle_radius_divisor": 6,
+    "square_side_range": (1, 4),                    # max side = img_size // divisor
+}
+
+LAYER_OBJECT_COUNTS = {
+    # You can set a fixed count (e.g., 0, 12) or a range tuple (min, max).
+    "fracture": (1, 5),
+    "smallcircle": (0, 500),
+    "spot": (0, 50),
+    "circle": (0, 0),
+    "rectangle": (0, 0),
+    "square": (0, 0),
+    "triangle": (0, 0),
+}
+
+
+======================
+
+
+Config_number = "8"
+
+PATHS = {
+    "output_dir": "Data/generalized_dataset",      # generated images/masks
+    "samples_dir": "./samples",                    # real images used as FDA target
+    "input_dir": "./output_images/",               # real background source for mode='real'
+}
+
+RUN_CONFIG = {
+    "mode": "real",                                 # 'simple' | 'real' | 'fda'
+    "num_images": 500,
+    "image_size": 800,
+}
+
+FDA_CONFIG = {
+    "L_range": (0.1, 0.9),
+    "L_round_digits": 2,
+}
+
+MASK_LABELS = {
+    "background": 0,
+    "line": 255,
+    "shape": 125,
+}
+
+NOISE_CONFIG = {
+    "apply_blur_probability": 0.2,
+    "blur_kernel_choices": [3, 5, 7],
+    "blur_sigma_range": (1, 2),
+    "apply_gaussian_probability": 0.1,
+    "apply_poisson_probability": 0.1,
+    "apply_salt_pepper_probability": 0.1,
+    "apply_speckle_probability": 0.1,
+    "gaussian_mean": 0,
+    "gaussian_std": 20,
+    "salt_pepper_amount": 0.02,
+    "salt_vs_pepper": 0.5,
+    "speckle_std": 0.2,
+}
+
+# ============================
+
+LAYER_ORDER_CONFIG = {
+    # True: all objects are interleaved randomly and opacity is forced to 1.0.
+    # False: non-fracture objects are drawn first, then fractures are added last.
+    "random_layer_order": False,
+}
+
+DRAWING_CONFIG = {
+    "thickness_range": (10, 20),
+    "color_range": (0, 20),
+    "bg_color_range": (70, 100),
+    "opacity_range": (0.9, 1.0),
+    "soft_edge_probability": 0.5,
+    "soft_edge_kernels": [3, 5, 7],
+    "shape_soft_edge_kernels": [7, 11, 15],
+}
+
+CRACK_CONFIG = {
+    "start_region_divisor": 4,                      # start in center-ish region
+    "main_length_range": (200, 800),
+    "color_jitter_range": (0, 0),
+    "preferred_angle_range": (0, 2 * np.pi),
+    "angle_deviation": 0.3,
+    "preferred_angle_drift": (-0.1, 0.1),
+    "step_size_range": (1.0, 3.0),
+    "thickness_variation_range": (0.5, 1.5),
+    "branch_probability": 0.02,
+    "branch_after_step": 20,
+    "branch_side_choices": [-1, 1],
+    "branch_angle_range": (0.3, 0.8),
+    "branch_length_range": (20, 100),
+    "branch_thickness_drop_range": (1, 2),
+    "branch_angle_jitter": (-0.2, 0.2),
+    "branch_step_range": (0.8, 2.0),
+    "branch_color_jitter": (-12, 12),
+    "edge_margin": 1,
+}
+
+SHAPE_CONFIG = {
+    "smallcircle_radius_range": (1, 7),
+    "spot_radius_x_range": (2, 18),
+    "spot_radius_ratio_range": (0.4, 1.6),
+    "spot_point_count_range": (10, 22),
+    "spot_edge_perturbation": (-0.4, 0.4),
+    "circle_radius_min": 10,
+    "circle_radius_divisor": 6,
+    "square_side_range": (1, 4),                    # max side = img_size // divisor
+}
+
+LAYER_OBJECT_COUNTS = {
+    # You can set a fixed count (e.g., 0, 12) or a range tuple (min, max).
+    "fracture": (1, 5),
+    "smallcircle": (0, 1000),
+    "spot": (0, 200),
+    "circle": (0, 3),
+    "rectangle": (0, 3),
+    "square": (0, 0),
+    "triangle": (0, 0),
+}
+
+================
+
+Config_number = "9"
+
+PATHS = {
+    "output_dir": "Data/generalized_dataset",      # generated images/masks
+    "samples_dir": "./samples",                    # real images used as FDA target
+    "input_dir": "./output_images/",               # real background source for mode='real'
+}
+
+RUN_CONFIG = {
+    "mode": "simple",                                 # 'simple' | 'real' | 'fda'
+    "num_images": 500,
+    "image_size": 800,
+}
+
+FDA_CONFIG = {
+    "L_range": (0.1, 0.9),
+    "L_round_digits": 2,
+}
+
+MASK_LABELS = {
+    "background": 0,
+    "line": 255,
+    "shape": 125,
+}
+
+NOISE_CONFIG = {
+    "apply_blur_probability": 0,
+    "blur_kernel_choices": [3, 5, 7],
+    "blur_sigma_range": (1, 2),
+    "apply_gaussian_probability": 0.1,
+    "apply_poisson_probability": 0.1,
+    "apply_salt_pepper_probability": 0.1,
+    "apply_speckle_probability": 0.1,
+    "gaussian_mean": 0,
+    "gaussian_std": 20,
+    "salt_pepper_amount": 0.02,
+    "salt_vs_pepper": 0.5,
+    "speckle_std": 0.2,
+}
+
+# ============================
+
+LAYER_ORDER_CONFIG = {
+    # True: all objects are interleaved randomly and opacity is forced to 1.0.
+    # False: non-fracture objects are drawn first, then fractures are added last.
+    "random_layer_order": False,
+}
+
+DRAWING_CONFIG = {
+    "thickness_range": (2, 5),
+    "color_range": (20, 50),
+    "bg_color_range": (70, 100),
+    "opacity_range": (0.7, 1.0),
+    "soft_edge_probability": 0.5,
+    "soft_edge_kernels": [3, 5, 7],
+    "shape_soft_edge_kernels": [7, 11, 15],
+}
+
+CRACK_CONFIG = {
+    "start_region_divisor": 4,                      # start in center-ish region
+    "main_length_range": (200, 800),
+    "color_jitter_range": (0, 0),
+    "preferred_angle_range": (0, 2 * np.pi),
+    "angle_deviation": 0.3,
+    "preferred_angle_drift": (-0.1, 0.1),
+    "step_size_range": (1.0, 3.0),
+    "thickness_variation_range": (0.5, 1.5),
+    "branch_probability": 0.02,
+    "branch_after_step": 20,
+    "branch_side_choices": [-1, 1],
+    "branch_angle_range": (0.3, 0.8),
+    "branch_length_range": (20, 100),
+    "branch_thickness_drop_range": (1, 2),
+    "branch_angle_jitter": (-0.2, 0.2),
+    "branch_step_range": (0.8, 2.0),
+    "branch_color_jitter": (-12, 12),
+    "edge_margin": 1,
+}
+
+SHAPE_CONFIG = {
+    "smallcircle_radius_range": (1, 7),
+    "spot_radius_x_range": (2, 18),
+    "spot_radius_ratio_range": (0.4, 1.6),
+    "spot_point_count_range": (10, 22),
+    "spot_edge_perturbation": (-0.4, 0.4),
+    "circle_radius_min": 10,
+    "circle_radius_divisor": 6,
+    "square_side_range": (1, 4),                    # max side = img_size // divisor
+}
+
+LAYER_OBJECT_COUNTS = {
+    # You can set a fixed count (e.g., 0, 12) or a range tuple (min, max).
+    "fracture": (1, 15),
+    "smallcircle": (0, 100),
+    "spot": (0, 20),
+    "circle": (0, 0),
+    "rectangle": (0, 0),
+    "square": (0, 0),
+    "triangle": (0, 0),
+}
+
+
+====================
+
+Config_number = "10"
+
+PATHS = {
+    "output_dir": "Data/generalized_dataset",      # generated images/masks
+    "samples_dir": "./samples",                    # real images used as FDA target
+    "input_dir": "./output_images/",               # real background source for mode='real'
+}
+
+RUN_CONFIG = {
+    "mode": "simple",                                 # 'simple' | 'real' | 'fda'
+    "num_images": 500,
+    "image_size": 800,
+}
+
+FDA_CONFIG = {
+    "L_range": (0.1, 0.9),
+    "L_round_digits": 2,
+}
+
+MASK_LABELS = {
+    "background": 0,
+    "line": 255,
+    "shape": 125,
+}
+
+NOISE_CONFIG = {
+    "apply_blur_probability": 0.3,
+    "blur_kernel_choices": [3, 5, 7],
+    "blur_sigma_range": (1, 2),
+    "apply_gaussian_probability": 0.1,
+    "apply_poisson_probability": 0.1,
+    "apply_salt_pepper_probability": 0.1,
+    "apply_speckle_probability": 0.1,
+    "gaussian_mean": 0,
+    "gaussian_std": 20,
+    "salt_pepper_amount": 0.02,
+    "salt_vs_pepper": 0.5,
+    "speckle_std": 0.2,
+}
+
+# ============================
+
+LAYER_ORDER_CONFIG = {
+    # True: all objects are interleaved randomly and opacity is forced to 1.0.
+    # False: non-fracture objects are drawn first, then fractures are added last.
+    "random_layer_order": False,
+}
+
+DRAWING_CONFIG = {
+    "thickness_range": (2, 5),
+    "color_range": (20, 50),
+    "bg_color_range": (70, 100),
+    "opacity_range": (0.7, 1.0),
+    "soft_edge_probability": 0.5,
+    "soft_edge_kernels": [3, 5, 7],
+    "shape_soft_edge_kernels": [7, 11, 15],
+}
+
+CRACK_CONFIG = {
+    "start_region_divisor": 4,                      # start in center-ish region
+    "main_length_range": (200, 800),
+    "color_jitter_range": (0, 0),
+    "preferred_angle_range": (0, 2 * np.pi),
+    "angle_deviation": 0.3,
+    "preferred_angle_drift": (-0.1, 0.1),
+    "step_size_range": (1.0, 3.0),
+    "thickness_variation_range": (0.5, 1.5),
+    "branch_probability": 0.02,
+    "branch_after_step": 20,
+    "branch_side_choices": [-1, 1],
+    "branch_angle_range": (0.3, 0.8),
+    "branch_length_range": (20, 100),
+    "branch_thickness_drop_range": (1, 2),
+    "branch_angle_jitter": (-0.2, 0.2),
+    "branch_step_range": (0.8, 2.0),
+    "branch_color_jitter": (-12, 12),
+    "edge_margin": 1,
+}
+
+SHAPE_CONFIG = {
+    "smallcircle_radius_range": (1, 7),
+    "spot_radius_x_range": (2, 18),
+    "spot_radius_ratio_range": (0.4, 1.6),
+    "spot_point_count_range": (10, 22),
+    "spot_edge_perturbation": (-0.4, 0.4),
+    "circle_radius_min": 10,
+    "circle_radius_divisor": 6,
+    "square_side_range": (1, 4),                    # max side = img_size // divisor
+}
+
+LAYER_OBJECT_COUNTS = {
+    # You can set a fixed count (e.g., 0, 12) or a range tuple (min, max).
+    "fracture": (1, 15),
+    "smallcircle": (0, 100),
+    "spot": (0, 20),
+    "circle": (0, 0),
+    "rectangle": (0, 0),
+    "square": (0, 0),
+    "triangle": (0, 0),
+}
+
+===========================
+
+Config_number = "11"
+
+PATHS = {
+    "output_dir": "Data/generalized_dataset",      # generated images/masks
+    "samples_dir": "./samples",                    # real images used as FDA target
+    "input_dir": "./output_images/",               # real background source for mode='real'
+}
+
+RUN_CONFIG = {
+    "mode": "simple",                                 # 'simple' | 'real' | 'fda'
+    "num_images": 500,
+    "image_size": 800,
+}
+
+FDA_CONFIG = {
+    "L_range": (0.1, 0.9),
+    "L_round_digits": 2,
+}
+
+MASK_LABELS = {
+    "background": 0,
+    "line": 255,
+    "shape": 125,
+}
+
+NOISE_CONFIG = {
+    "apply_blur_probability": 0.3,
+    "blur_kernel_choices": [3, 5, 7],
+    "blur_sigma_range": (1, 2),
+    "apply_gaussian_probability": 0.1,
+    "apply_poisson_probability": 0.1,
+    "apply_salt_pepper_probability": 0.1,
+    "apply_speckle_probability": 0.1,
+    "gaussian_mean": 0,
+    "gaussian_std": 20,
+    "salt_pepper_amount": 0.02,
+    "salt_vs_pepper": 0.5,
+    "speckle_std": 0.2,
+}
+
+# ============================
+
+LAYER_ORDER_CONFIG = {
+    # True: all objects are interleaved randomly and opacity is forced to 1.0.
+    # False: non-fracture objects are drawn first, then fractures are added last.
+    "random_layer_order": False,
+}
+
+DRAWING_CONFIG = {
+    "thickness_range": (2, 5),
+    "color_range": (20, 50),
+    "bg_color_range": (70, 100),
+    "opacity_range": (0.7, 1.0),
+    "soft_edge_probability": 0.5,
+    "soft_edge_kernels": [3, 5, 7],
+    "shape_soft_edge_kernels": [7, 11, 15],
+}
+
+CRACK_CONFIG = {
+    "start_region_divisor": 4,                      # start in center-ish region
+    "main_length_range": (200, 800),
+    "color_jitter_range": (0, 0),
+    "preferred_angle_range": (0, 2 * np.pi),
+    "angle_deviation": 0.3,
+    "preferred_angle_drift": (-0.1, 0.1),
+    "step_size_range": (1.0, 3.0),
+    "thickness_variation_range": (0.5, 1.5),
+    "branch_probability": 0.02,
+    "branch_after_step": 20,
+    "branch_side_choices": [-1, 1],
+    "branch_angle_range": (0.3, 0.8),
+    "branch_length_range": (20, 100),
+    "branch_thickness_drop_range": (1, 2),
+    "branch_angle_jitter": (-0.2, 0.2),
+    "branch_step_range": (0.8, 2.0),
+    "branch_color_jitter": (-12, 12),
+    "edge_margin": 1,
+}
+
+SHAPE_CONFIG = {
+    "smallcircle_radius_range": (1, 7),
+    "spot_radius_x_range": (2, 18),
+    "spot_radius_ratio_range": (0.4, 1.6),
+    "spot_point_count_range": (10, 22),
+    "spot_edge_perturbation": (-0.4, 0.4),
+    "circle_radius_min": 10,
+    "circle_radius_divisor": 6,
+    "square_side_range": (1, 4),                    # max side = img_size // divisor
+}
+
+LAYER_OBJECT_COUNTS = {
+    # You can set a fixed count (e.g., 0, 12) or a range tuple (min, max).
+    "fracture": (1, 3),
+    "smallcircle": (0, 100),
+    "spot": (0, 20),
+    "circle": (0, 2),
+    "rectangle": (0, 3),
+    "square": (0, 0),
+    "triangle": (0, 0),
+}
+
+================
+
+Config_number = "12"
+
+PATHS = {
+    "output_dir": "Data/generalized_dataset",      # generated images/masks
+    "samples_dir": "./samples",                    # real images used as FDA target
+    "input_dir": "./output_images/",               # real background source for mode='real'
+}
+
+RUN_CONFIG = {
+    "mode": "simple",                                 # 'simple' | 'real' | 'fda'
+    "num_images": 500,
+    "image_size": 800,
+}
+
+FDA_CONFIG = {
+    "L_range": (0.1, 0.9),
+    "L_round_digits": 2,
+}
+
+MASK_LABELS = {
+    "background": 0,
+    "line": 255,
+    "shape": 125,
+}
+
+NOISE_CONFIG = {
+    "apply_blur_probability": 0.3,
+    "blur_kernel_choices": [3, 5, 7],
+    "blur_sigma_range": (1, 2),
+    "apply_gaussian_probability": 0.1,
+    "apply_poisson_probability": 0.1,
+    "apply_salt_pepper_probability": 0.1,
+    "apply_speckle_probability": 0.1,
+    "gaussian_mean": 0,
+    "gaussian_std": 20,
+    "salt_pepper_amount": 0.02,
+    "salt_vs_pepper": 0.5,
+    "speckle_std": 0.2,
+}
+
+# ============================
+
+LAYER_ORDER_CONFIG = {
+    # True: all objects are interleaved randomly and opacity is forced to 1.0.
+    # False: non-fracture objects are drawn first, then fractures are added last.
+    "random_layer_order": False,
+}
+
+DRAWING_CONFIG = {
+    "thickness_range": (5, 20),
+    "color_range": (20, 50),
+    "bg_color_range": (70, 100),
+    "opacity_range": (0.9, 1.0),
+    "soft_edge_probability": 0.5,
+    "soft_edge_kernels": [3, 5, 7],
+    "shape_soft_edge_kernels": [7, 11, 15],
+}
+
+CRACK_CONFIG = {
+    "start_region_divisor": 4,                      # start in center-ish region
+    "main_length_range": (700, 800),
+    "color_jitter_range": (0, 0),
+    "preferred_angle_range": (0, 2 * np.pi),
+    "angle_deviation": 0.3,
+    "preferred_angle_drift": (-0.1, 0.1),
+    "step_size_range": (1.0, 3.0),
+    "thickness_variation_range": (0.5, 1.5),
+    "branch_probability": 0,
+    "branch_after_step": 20,
+    "branch_side_choices": [-1, 1],
+    "branch_angle_range": (0.3, 0.8),
+    "branch_length_range": (20, 100),
+    "branch_thickness_drop_range": (1, 2),
+    "branch_angle_jitter": (-0.2, 0.2),
+    "branch_step_range": (0.8, 2.0),
+    "branch_color_jitter": (-12, 12),
+    "edge_margin": 1,
+}
+
+SHAPE_CONFIG = {
+    "smallcircle_radius_range": (1, 7),
+    "spot_radius_x_range": (2, 18),
+    "spot_radius_ratio_range": (0.4, 1.6),
+    "spot_point_count_range": (10, 22),
+    "spot_edge_perturbation": (-0.4, 0.4),
+    "circle_radius_min": 10,
+    "circle_radius_divisor": 6,
+    "square_side_range": (1, 4),                    # max side = img_size // divisor
+}
+
+LAYER_OBJECT_COUNTS = {
+    # You can set a fixed count (e.g., 0, 12) or a range tuple (min, max).
+    "fracture": (1, 3),
+    "smallcircle": (0, 1000),
+    "spot": (0, 1000),
+    "circle": (0, 2),
+    "rectangle": (0, 3),
+    "square": (0, 0),
+    "triangle": (0, 0),
+}
+
+===============
+
+
+Config_number = "13"
+
+PATHS = {
+    "output_dir": "Data/generalized_dataset",      # generated images/masks
+    "samples_dir": "./samples",                    # real images used as FDA target
+    "input_dir": "./output_images/",               # real background source for mode='real'
+}
+
+RUN_CONFIG = {
+    "mode": "simple",                                 # 'simple' | 'real' | 'fda'
+    "num_images": 500,
+    "image_size": 800,
+}
+
+FDA_CONFIG = {
+    "L_range": (0.1, 0.9),
+    "L_round_digits": 2,
+}
+
+MASK_LABELS = {
+    "background": 0,
+    "line": 255,
+    "shape": 125,
+}
+
+NOISE_CONFIG = {
+    "apply_blur_probability": 0.3,
+    "blur_kernel_choices": [3, 5, 7],
+    "blur_sigma_range": (1, 2),
+    "apply_gaussian_probability": 0.1,
+    "apply_poisson_probability": 0.1,
+    "apply_salt_pepper_probability": 0.1,
+    "apply_speckle_probability": 0.1,
+    "gaussian_mean": 0,
+    "gaussian_std": 20,
+    "salt_pepper_amount": 0.02,
+    "salt_vs_pepper": 0.5,
+    "speckle_std": 0.2,
+}
+
+# ============================
+
+LAYER_ORDER_CONFIG = {
+    # True: all objects are interleaved randomly and opacity is forced to 1.0.
+    # False: non-fracture objects are drawn first, then fractures are added last.
+    "random_layer_order": False,
+}
+
+DRAWING_CONFIG = {
+    "thickness_range": (5, 20),
+    "color_range": (20, 50),
+    "bg_color_range": (70, 100),
+    "opacity_range": (0.9, 1.0),
+    "soft_edge_probability": 0.5,
+    "soft_edge_kernels": [3, 5, 7],
+    "shape_soft_edge_kernels": [7, 11, 15],
+}
+
+CRACK_CONFIG = {
+    "start_region_divisor": 4,                      # start in center-ish region
+    "main_length_range": (700, 800),
+    "color_jitter_range": (0, 0),
+    "preferred_angle_range": (0, 2 * np.pi),
+    "angle_deviation": 0.3,
+    "preferred_angle_drift": (-0.1, 0.1),
+    "step_size_range": (1.0, 3.0),
+    "thickness_variation_range": (0.5, 1.5),
+    "branch_probability": 0,
+    "branch_after_step": 20,
+    "branch_side_choices": [-1, 1],
+    "branch_angle_range": (0.3, 0.8),
+    "branch_length_range": (20, 100),
+    "branch_thickness_drop_range": (1, 2),
+    "branch_angle_jitter": (-0.2, 0.2),
+    "branch_step_range": (0.8, 2.0),
+    "branch_color_jitter": (-12, 12),
+    "edge_margin": 1,
+}
+
+SHAPE_CONFIG = {
+    "smallcircle_radius_range": (1, 3),
+    "spot_radius_x_range": (2, 18),
+    "spot_radius_ratio_range": (0.4, 1.6),
+    "spot_point_count_range": (10, 22),
+    "spot_edge_perturbation": (-0.4, 0.4),
+    "circle_radius_min": 10,
+    "circle_radius_divisor": 6,
+    "square_side_range": (1, 4),                    # max side = img_size // divisor
+}
+
+LAYER_OBJECT_COUNTS = {
+    # You can set a fixed count (e.g., 0, 12) or a range tuple (min, max).
+    "fracture": (1, 3),
+    "smallcircle": (3000, 5000),
+    "spot": (0, 0),
+    "circle": (0, 0),
+    "rectangle": (0, 0),
+    "square": (0, 0),
+    "triangle": (0, 0),
+}
+
+
+====================
+
+Config_number = "14"
+
+PATHS = {
+    "output_dir": "Data/generalized_dataset",      # generated images/masks
+    "samples_dir": "./samples",                    # real images used as FDA target
+    "input_dir": "./output_images/",               # real background source for mode='real'
+}
+
+RUN_CONFIG = {
+    "mode": "simple",                                 # 'simple' | 'real' | 'fda'
+    "num_images": 500,
+    "image_size": 800,
+}
+
+FDA_CONFIG = {
+    "L_range": (0.1, 0.9),
+    "L_round_digits": 2,
+}
+
+MASK_LABELS = {
+    "background": 0,
+    "line": 255,
+    "shape": 125,
+}
+
+NOISE_CONFIG = {
+    "apply_blur_probability": 0.3,
+    "blur_kernel_choices": [3, 5, 7],
+    "blur_sigma_range": (1, 2),
+    "apply_gaussian_probability": 0.1,
+    "apply_poisson_probability": 0.1,
+    "apply_salt_pepper_probability": 0.1,
+    "apply_speckle_probability": 0.1,
+    "gaussian_mean": 0,
+    "gaussian_std": 20,
+    "salt_pepper_amount": 0.02,
+    "salt_vs_pepper": 0.5,
+    "speckle_std": 0.2,
+}
+
+# ============================
+
+LAYER_ORDER_CONFIG = {
+    # True: all objects are interleaved randomly and opacity is forced to 1.0.
+    # False: non-fracture objects are drawn first, then fractures are added last.
+    "random_layer_order": True,
+}
+
+DRAWING_CONFIG = {
+    "thickness_range": (5, 20),
+    "color_range": (20, 50),
+    "bg_color_range": (70, 100),
+    "opacity_range": (0.9, 1.0),
+    "soft_edge_probability": 0.5,
+    "soft_edge_kernels": [3, 5, 7],
+    "shape_soft_edge_kernels": [7, 11, 15],
+}
+
+CRACK_CONFIG = {
+    "start_region_divisor": 4,                      # start in center-ish region
+    "main_length_range": (700, 800),
+    "color_jitter_range": (0, 0),
+    "preferred_angle_range": (0, 2 * np.pi),
+    "angle_deviation": 0.3,
+    "preferred_angle_drift": (-0.1, 0.1),
+    "step_size_range": (1.0, 3.0),
+    "thickness_variation_range": (0.5, 1.5),
+    "branch_probability": 0,
+    "branch_after_step": 20,
+    "branch_side_choices": [-1, 1],
+    "branch_angle_range": (0.3, 0.8),
+    "branch_length_range": (20, 100),
+    "branch_thickness_drop_range": (1, 2),
+    "branch_angle_jitter": (-0.2, 0.2),
+    "branch_step_range": (0.8, 2.0),
+    "branch_color_jitter": (-12, 12),
+    "edge_margin": 1,
+}
+
+SHAPE_CONFIG = {
+    "smallcircle_radius_range": (1, 3),
+    "spot_radius_x_range": (2, 18),
+    "spot_radius_ratio_range": (0.4, 1.6),
+    "spot_point_count_range": (10, 22),
+    "spot_edge_perturbation": (-0.4, 0.4),
+    "circle_radius_min": 10,
+    "circle_radius_divisor": 6,
+    "square_side_range": (1, 4),                    # max side = img_size // divisor
+}
+
+LAYER_OBJECT_COUNTS = {
+    # You can set a fixed count (e.g., 0, 12) or a range tuple (min, max).
+    "fracture": (1, 3),
+    "smallcircle": (3000, 5000),
+    "spot": (0, 0),
+    "circle": (0, 0),
+    "rectangle": (0, 0),
+    "square": (0, 0),
+    "triangle": (0, 0),
+}
+
+===============================
+
+Config_number = "15"
+
+PATHS = {
+    "output_dir": "Data/generalized_dataset",      # generated images/masks
+    "samples_dir": "./samples",                    # real images used as FDA target
+    "input_dir": "./output_images/",               # real background source for mode='real'
+}
+
+RUN_CONFIG = {
+    "mode": "simple",                                 # 'simple' | 'real' | 'fda'
+    "num_images": 500,
+    "image_size": 800,
+}
+
+FDA_CONFIG = {
+    "L_range": (0.1, 0.9),
+    "L_round_digits": 2,
+}
+
+MASK_LABELS = {
+    "background": 0,
+    "line": 255,
+    "shape": 125,
+}
+
+NOISE_CONFIG = {
+    "apply_blur_probability": 0.3,
+    "blur_kernel_choices": [3, 5, 7],
+    "blur_sigma_range": (1, 2),
+    "apply_gaussian_probability": 0.1,
+    "apply_poisson_probability": 0.1,
+    "apply_salt_pepper_probability": 0.1,
+    "apply_speckle_probability": 0.1,
+    "gaussian_mean": 0,
+    "gaussian_std": 20,
+    "salt_pepper_amount": 0.02,
+    "salt_vs_pepper": 0.5,
+    "speckle_std": 0.2,
+}
+
+# ============================
+
+LAYER_ORDER_CONFIG = {
+    # True: all objects are interleaved randomly and opacity is forced to 1.0.
+    # False: non-fracture objects are drawn first, then fractures are added last.
+    "random_layer_order": False,
+}
+
+DRAWING_CONFIG = {
+    "thickness_range": (1, 5),
+    "color_range": (30, 69),
+    "bg_color_range": (70, 150),
+    "opacity_range": (0.9, 1.0),
+    "soft_edge_probability": 0.5,
+    "soft_edge_kernels": [3, 5, 7],
+    "shape_soft_edge_kernels": [7, 11, 15],
+}
+
+CRACK_CONFIG = {
+    "start_region_divisor": 4,                      # start in center-ish region
+    "main_length_range": (100, 800),
+    "color_jitter_range": (0, 0),
+    "preferred_angle_range": (0, 2 * np.pi),
+    "angle_deviation": 0.3,
+    "preferred_angle_drift": (-0.1, 0.1),
+    "step_size_range": (1.0, 3.0),
+    "thickness_variation_range": (0.5, 1.5),
+    "branch_probability": 0.04,
+    "branch_after_step": 20,
+    "branch_side_choices": [-1, 1],
+    "branch_angle_range": (0.3, 0.8),
+    "branch_length_range": (20, 100),
+    "branch_thickness_drop_range": (1, 2),
+    "branch_angle_jitter": (-0.2, 0.2),
+    "branch_step_range": (0.8, 2.0),
+    "branch_color_jitter": (-12, 12),
+    "edge_margin": 1,
+}
+
+SHAPE_CONFIG = {
+    "smallcircle_radius_range": (1, 3),
+    "spot_radius_x_range": (2, 18),
+    "spot_radius_ratio_range": (0.4, 1.6),
+    "spot_point_count_range": (10, 22),
+    "spot_edge_perturbation": (-0.4, 0.4),
+    "circle_radius_min": 10,
+    "circle_radius_divisor": 6,
+    "square_side_range": (1, 4),                    # max side = img_size // divisor
+}
+
+LAYER_OBJECT_COUNTS = {
+    # You can set a fixed count (e.g., 0, 12) or a range tuple (min, max).
+    "fracture": (1, 20),
+    "smallcircle": (0, 0),
+    "spot": (0, 0),
+    "circle": (1, 10),
+    "rectangle": (0, 0),
+    "square": (0, 0),
+    "triangle": (0, 0),
+}
+
+===========================
+
+Config_number = "16"
+
+PATHS = {
+    "output_dir": "Data/generalized_dataset",      # generated images/masks
+    "samples_dir": "./samples",                    # real images used as FDA target
+    "input_dir": "./output_images/",               # real background source for mode='real'
+}
+
+RUN_CONFIG = {
+    "mode": "real",                                 # 'simple' | 'real' | 'fda'
+    "num_images": 500,
+    "image_size": 800,
+}
+
+FDA_CONFIG = {
+    "L_range": (0.1, 0.9),
+    "L_round_digits": 2,
+}
+
+MASK_LABELS = {
+    "background": 0,
+    "line": 255,
+    "shape": 125,
+}
+
+NOISE_CONFIG = {
+    "apply_blur_probability": 0.3,
+    "blur_kernel_choices": [3, 5, 7],
+    "blur_sigma_range": (1, 2),
+    "apply_gaussian_probability": 0.1,
+    "apply_poisson_probability": 0.1,
+    "apply_salt_pepper_probability": 0.1,
+    "apply_speckle_probability": 0.1,
+    "gaussian_mean": 0,
+    "gaussian_std": 20,
+    "salt_pepper_amount": 0.02,
+    "salt_vs_pepper": 0.5,
+    "speckle_std": 0.2,
+}
+
+# ============================
+
+LAYER_ORDER_CONFIG = {
+    # True: all objects are interleaved randomly and opacity is forced to 1.0.
+    # False: non-fracture objects are drawn first, then fractures are added last.
+    "random_layer_order": False,
+}
+
+DRAWING_CONFIG = {
+    "thickness_range": (1, 5),
+    "color_range": (30, 69),
+    "bg_color_range": (70, 150),
+    "opacity_range": (0.9, 1.0),
+    "soft_edge_probability": 0.5,
+    "soft_edge_kernels": [3, 5, 7],
+    "shape_soft_edge_kernels": [7, 11, 15],
+}
+
+CRACK_CONFIG = {
+    "start_region_divisor": 4,                      # start in center-ish region
+    "main_length_range": (100, 800),
+    "color_jitter_range": (0, 0),
+    "preferred_angle_range": (0, 2 * np.pi),
+    "angle_deviation": 0.3,
+    "preferred_angle_drift": (-0.1, 0.1),
+    "step_size_range": (1.0, 3.0),
+    "thickness_variation_range": (0.5, 1.5),
+    "branch_probability": 0.04,
+    "branch_after_step": 20,
+    "branch_side_choices": [-1, 1],
+    "branch_angle_range": (0.3, 0.8),
+    "branch_length_range": (20, 100),
+    "branch_thickness_drop_range": (1, 2),
+    "branch_angle_jitter": (-0.2, 0.2),
+    "branch_step_range": (0.8, 2.0),
+    "branch_color_jitter": (-12, 12),
+    "edge_margin": 1,
+}
+
+SHAPE_CONFIG = {
+    "smallcircle_radius_range": (1, 3),
+    "spot_radius_x_range": (2, 18),
+    "spot_radius_ratio_range": (0.4, 1.6),
+    "spot_point_count_range": (10, 22),
+    "spot_edge_perturbation": (-0.4, 0.4),
+    "circle_radius_min": 10,
+    "circle_radius_divisor": 6,
+    "square_side_range": (1, 4),                    # max side = img_size // divisor
+}
+
+LAYER_OBJECT_COUNTS = {
+    # You can set a fixed count (e.g., 0, 12) or a range tuple (min, max).
+    "fracture": (1, 20),
+    "smallcircle": (0, 0),
+    "spot": (0, 0),
+    "circle": (1, 10),
+    "rectangle": (0, 0),
+    "square": (0, 0),
+    "triangle": (0, 0),
+}
+
+
+===========================
+
+Config_number = "17"
+
+PATHS = {
+    "output_dir": "Data/generalized_dataset",      # generated images/masks
+    "samples_dir": "./samples",                    # real images used as FDA target
+    "input_dir": "./output_images/",               # real background source for mode='real'
+}
+
+RUN_CONFIG = {
+    "mode": "simple",                                 # 'simple' | 'real' | 'fda'
+    "num_images": 500,
+    "image_size": 800,
+}
+
+FDA_CONFIG = {
+    "L_range": (0.1, 0.9),
+    "L_round_digits": 2,
+}
+
+MASK_LABELS = {
+    "background": 0,
+    "line": 255,
+    "shape": 125,
+}
+
+NOISE_CONFIG = {
+    "apply_blur_probability": 0.3,
+    "blur_kernel_choices": [3, 5, 7],
+    "blur_sigma_range": (1, 2),
+    "apply_gaussian_probability": 0.1,
+    "apply_poisson_probability": 0.1,
+    "apply_salt_pepper_probability": 0.1,
+    "apply_speckle_probability": 0.1,
+    "gaussian_mean": 0,
+    "gaussian_std": 20,
+    "salt_pepper_amount": 0.02,
+    "salt_vs_pepper": 0.5,
+    "speckle_std": 0.2,
+}
+
+# ============================
+
+LAYER_ORDER_CONFIG = {
+    # True: all objects are interleaved randomly and opacity is forced to 1.0.
+    # False: non-fracture objects are drawn first, then fractures are added last.
+    "random_layer_order": False,
+}
+
+DRAWING_CONFIG = {
+    "thickness_range": (1, 8),
+    "color_range": (10, 69),
+    "bg_color_range": (70, 150),
+    "opacity_range": (0.9, 1.0),
+    "soft_edge_probability": 0.5,
+    "soft_edge_kernels": [3, 5, 7],
+    "shape_soft_edge_kernels": [7, 11, 15],
+}
+
+CRACK_CONFIG = {
+    "start_region_divisor": 4,                      # start in center-ish region
+    "main_length_range": (500, 800),
+    "color_jitter_range": (-50, 50),
+    "preferred_angle_range": (0, 2 * np.pi),
+    "angle_deviation": 0.2,
+    "preferred_angle_drift": (-0.1, 0.1),
+    "step_size_range": (1.0, 3.0),
+    "thickness_variation_range": (0.3, 2.5),
+    "branch_probability": 0.01,
+    "branch_after_step": 20,
+    "branch_side_choices": [-1, 1],
+    "branch_angle_range": (0.3, 0.8),
+    "branch_length_range": (20, 100),
+    "branch_thickness_drop_range": (1, 2),
+    "branch_angle_jitter": (-0.2, 0.2),
+    "branch_step_range": (0.8, 2.0),
+    "branch_color_jitter": (-12, 12),
+    "edge_margin": 1,
+}
+
+SHAPE_CONFIG = {
+    "smallcircle_radius_range": (1, 3),
+    "spot_radius_x_range": (2, 18),
+    "spot_radius_ratio_range": (0.4, 1.6),
+    "spot_point_count_range": (10, 22),
+    "spot_edge_perturbation": (-0.4, 0.4),
+    "circle_radius_min": 10,
+    "circle_radius_divisor": 6,
+    "square_side_range": (1, 4),                    # max side = img_size // divisor
+}
+
+LAYER_OBJECT_COUNTS = {
+    # You can set a fixed count (e.g., 0, 12) or a range tuple (min, max).
+    "fracture": (1, 3),
+    "smallcircle": (0, 2000),
+    "spot": (0, 500),
+    "circle": (0, 0),
+    "rectangle": (0, 10),
+    "square": (0, 0),
+    "triangle": (0, 0),
+}
+=======================
+
+Config_number = "18"
+
+PATHS = {
+    "output_dir": "Data/generalized_dataset",      # generated images/masks
+    "samples_dir": "./samples",                    # real images used as FDA target
+    "input_dir": "./output_images/",               # real background source for mode='real'
+}
+
+RUN_CONFIG = {
+    "mode": "simple",                                 # 'simple' | 'real' | 'fda'
+    "num_images": 500,
+    "image_size": 800,
+}
+
+FDA_CONFIG = {
+    "L_range": (0.1, 0.9),
+    "L_round_digits": 2,
+}
+
+MASK_LABELS = {
+    "background": 0,
+    "line": 255,
+    "shape": 125,
+}
+
+NOISE_CONFIG = {
+    "apply_blur_probability": 0.3,
+    "blur_kernel_choices": [3, 5, 7],
+    "blur_sigma_range": (1, 2),
+    "apply_gaussian_probability": 0.1,
+    "apply_poisson_probability": 0.1,
+    "apply_salt_pepper_probability": 0.1,
+    "apply_speckle_probability": 0.1,
+    "gaussian_mean": 0,
+    "gaussian_std": 20,
+    "salt_pepper_amount": 0.02,
+    "salt_vs_pepper": 0.5,
+    "speckle_std": 0.2,
+}
+
+# ============================
+
+LAYER_ORDER_CONFIG = {
+    # True: all objects are interleaved randomly and opacity is forced to 1.0.
+    # False: non-fracture objects are drawn first, then fractures are added last.
+    "random_layer_order": True,
+}
+
+DRAWING_CONFIG = {
+    "thickness_range": (1, 8),
+    "color_range": (10, 69),
+    "bg_color_range": (70, 150),
+    "opacity_range": (0.9, 1.0),
+    "soft_edge_probability": 0.5,
+    "soft_edge_kernels": [3, 5, 7],
+    "shape_soft_edge_kernels": [7, 11, 15],
+}
+
+CRACK_CONFIG = {
+    "start_region_divisor": 4,                      # start in center-ish region
+    "main_length_range": (500, 800),
+    "color_jitter_range": (-50, 50),
+    "preferred_angle_range": (0, 2 * np.pi),
+    "angle_deviation": 0.2,
+    "preferred_angle_drift": (-0.1, 0.1),
+    "step_size_range": (1.0, 3.0),
+    "thickness_variation_range": (0.3, 2.5),
+    "branch_probability": 0.01,
+    "branch_after_step": 20,
+    "branch_side_choices": [-1, 1],
+    "branch_angle_range": (0.3, 0.8),
+    "branch_length_range": (20, 100),
+    "branch_thickness_drop_range": (1, 2),
+    "branch_angle_jitter": (-0.2, 0.2),
+    "branch_step_range": (0.8, 2.0),
+    "branch_color_jitter": (-12, 12),
+    "edge_margin": 1,
+}
+
+SHAPE_CONFIG = {
+    "smallcircle_radius_range": (1, 3),
+    "spot_radius_x_range": (2, 18),
+    "spot_radius_ratio_range": (0.4, 1.6),
+    "spot_point_count_range": (10, 22),
+    "spot_edge_perturbation": (-0.4, 0.4),
+    "circle_radius_min": 10,
+    "circle_radius_divisor": 6,
+    "square_side_range": (1, 4),                    # max side = img_size // divisor
+}
+
+LAYER_OBJECT_COUNTS = {
+    # You can set a fixed count (e.g., 0, 12) or a range tuple (min, max).
+    "fracture": (1, 3),
+    "smallcircle": (0, 2000),
+    "spot": (0, 500),
+    "circle": (0, 0),
+    "rectangle": (0, 10),
+    "square": (0, 0),
+    "triangle": (0, 0),
+}
+
+====================
+
+Config_number = "19"
+
+PATHS = {
+    "output_dir": "Data/generalized_dataset",      # generated images/masks
+    "samples_dir": "./samples",                    # real images used as FDA target
+    "input_dir": "./output_images/",               # real background source for mode='real'
+}
+
+RUN_CONFIG = {
+    "mode": "simple",                                 # 'simple' | 'real' | 'fda'
+    "num_images": 500,
+    "image_size": 800,
+}
+
+FDA_CONFIG = {
+    "L_range": (0.1, 0.9),
+    "L_round_digits": 2,
+}
+
+MASK_LABELS = {
+    "background": 0,
+    "line": 255,
+    "shape": 125,
+}
+
+NOISE_CONFIG = {
+    "apply_blur_probability": 0.3,
+    "blur_kernel_choices": [3, 5, 7],
+    "blur_sigma_range": (1, 2),
+    "apply_gaussian_probability": 0.1,
+    "apply_poisson_probability": 0.1,
+    "apply_salt_pepper_probability": 0.1,
+    "apply_speckle_probability": 0.1,
+    "gaussian_mean": 0,
+    "gaussian_std": 20,
+    "salt_pepper_amount": 0.02,
+    "salt_vs_pepper": 0.5,
+    "speckle_std": 0.2,
+}
+
+# ============================
+
+LAYER_ORDER_CONFIG = {
+    # True: all objects are interleaved randomly and opacity is forced to 1.0.
+    # False: non-fracture objects are drawn first, then fractures are added last.
+    "random_layer_order": False,
+}
+
+DRAWING_CONFIG = {
+    "thickness_range": (1, 5),
+    "color_range": (151, 230),
+    "bg_color_range": (20, 150),
+    "opacity_range": (0.9, 1.0),
+    "soft_edge_probability": 0.5,
+    "soft_edge_kernels": [3, 5, 7],
+    "shape_soft_edge_kernels": [7, 11, 15],
+}
+
+CRACK_CONFIG = {
+    "start_region_divisor": 4,                      # start in center-ish region
+    "main_length_range": (100, 800),
+    "color_jitter_range": (0, 0),
+    "preferred_angle_range": (0, 2 * np.pi),
+    "angle_deviation": 0.2,
+    "preferred_angle_drift": (-0.1, 0.1),
+    "step_size_range": (1.0, 3.0),
+    "thickness_variation_range": (0.3, 2.5),
+    "branch_probability": 0.01,
+    "branch_after_step": 20,
+    "branch_side_choices": [-1, 1],
+    "branch_angle_range": (0.3, 0.8),
+    "branch_length_range": (20, 100),
+    "branch_thickness_drop_range": (1, 2),
+    "branch_angle_jitter": (-0.2, 0.2),
+    "branch_step_range": (0.8, 2.0),
+    "branch_color_jitter": (-12, 12),
+    "edge_margin": 1,
+}
+
+SHAPE_CONFIG = {
+    "smallcircle_radius_range": (1, 6),
+    "spot_radius_x_range": (2, 18),
+    "spot_radius_ratio_range": (0.4, 1.6),
+    "spot_point_count_range": (10, 22),
+    "spot_edge_perturbation": (-0.4, 0.4),
+    "circle_radius_min": 10,
+    "circle_radius_divisor": 6,
+    "square_side_range": (1, 4),                    # max side = img_size // divisor
+}
+
+LAYER_OBJECT_COUNTS = {
+    # You can set a fixed count (e.g., 0, 12) or a range tuple (min, max).
+    "fracture": (1, 20),
+    "smallcircle": (0, 100),
+    "spot": (0, 100),
+    "circle": (0, 0),
+    "rectangle": (0, 0),
+    "square": (0, 0),
+    "triangle": (0, 0),
+}
+
+=========================
+
+Config_number = "20"
+
+PATHS = {
+    "output_dir": "Data/generalized_dataset",      # generated images/masks
+    "samples_dir": "./samples",                    # real images used as FDA target
+    "input_dir": "./output_images/",               # real background source for mode='real'
+}
+
+RUN_CONFIG = {
+    "mode": "real",                                 # 'simple' | 'real' | 'fda'
+    "num_images": 500,
+    "image_size": 800,
+}
+
+FDA_CONFIG = {
+    "L_range": (0.1, 0.9),
+    "L_round_digits": 2,
+}
+
+MASK_LABELS = {
+    "background": 0,
+    "line": 255,
+    "shape": 125,
+}
+
+NOISE_CONFIG = {
+    "apply_blur_probability": 0.3,
+    "blur_kernel_choices": [3, 5, 7],
+    "blur_sigma_range": (1, 2),
+    "apply_gaussian_probability": 0.1,
+    "apply_poisson_probability": 0.1,
+    "apply_salt_pepper_probability": 0.1,
+    "apply_speckle_probability": 0.1,
+    "gaussian_mean": 0,
+    "gaussian_std": 20,
+    "salt_pepper_amount": 0.02,
+    "salt_vs_pepper": 0.5,
+    "speckle_std": 0.2,
+}
+
+# ============================
+
+LAYER_ORDER_CONFIG = {
+    # True: all objects are interleaved randomly and opacity is forced to 1.0.
+    # False: non-fracture objects are drawn first, then fractures are added last.
+    "random_layer_order": False,
+}
+
+DRAWING_CONFIG = {
+    "thickness_range": (1, 5),
+    "color_range": (151, 230),
+    "bg_color_range": (20, 150),
+    "opacity_range": (0.9, 1.0),
+    "soft_edge_probability": 0.5,
+    "soft_edge_kernels": [3, 5, 7],
+    "shape_soft_edge_kernels": [7, 11, 15],
+}
+
+CRACK_CONFIG = {
+    "start_region_divisor": 4,                      # start in center-ish region
+    "main_length_range": (100, 800),
+    "color_jitter_range": (0, 0),
+    "preferred_angle_range": (0, 2 * np.pi),
+    "angle_deviation": 0.2,
+    "preferred_angle_drift": (-0.1, 0.1),
+    "step_size_range": (1.0, 3.0),
+    "thickness_variation_range": (0.3, 2.5),
+    "branch_probability": 0.01,
+    "branch_after_step": 20,
+    "branch_side_choices": [-1, 1],
+    "branch_angle_range": (0.3, 0.8),
+    "branch_length_range": (20, 100),
+    "branch_thickness_drop_range": (1, 2),
+    "branch_angle_jitter": (-0.2, 0.2),
+    "branch_step_range": (0.8, 2.0),
+    "branch_color_jitter": (-12, 12),
+    "edge_margin": 1,
+}
+
+SHAPE_CONFIG = {
+    "smallcircle_radius_range": (1, 6),
+    "spot_radius_x_range": (2, 18),
+    "spot_radius_ratio_range": (0.4, 1.6),
+    "spot_point_count_range": (10, 22),
+    "spot_edge_perturbation": (-0.4, 0.4),
+    "circle_radius_min": 10,
+    "circle_radius_divisor": 6,
+    "square_side_range": (1, 4),                    # max side = img_size // divisor
+}
+
+LAYER_OBJECT_COUNTS = {
+    # You can set a fixed count (e.g., 0, 12) or a range tuple (min, max).
+    "fracture": (1, 20),
+    "smallcircle": (0, 100),
+    "spot": (0, 100),
+    "circle": (0, 0),
+    "rectangle": (0, 0),
+    "square": (0, 0),
+    "triangle": (0, 0),
+}
+
+
+==========================
+Config_number = "21"
+
+PATHS = {
+    "output_dir": "Data/generalized_dataset",      # generated images/masks
+    "samples_dir": "./samples",                    # real images used as FDA target
+    "input_dir": "./output_images/",               # real background source for mode='real'
+}
+
+RUN_CONFIG = {
+    "mode": "simple",                                 # 'simple' | 'real' | 'fda'
+    "num_images": 500,
+    "image_size": 800,
+}
+
+FDA_CONFIG = {
+    "L_range": (0.1, 0.9),
+    "L_round_digits": 2,
+}
+
+MASK_LABELS = {
+    "background": 0,
+    "line": 255,
+    "shape": 125,
+}
+
+NOISE_CONFIG = {
+    "apply_blur_probability": 0.3,
+    "blur_kernel_choices": [3, 5, 7],
+    "blur_sigma_range": (1, 2),
+    "apply_gaussian_probability": 0.1,
+    "apply_poisson_probability": 0.1,
+    "apply_salt_pepper_probability": 0.1,
+    "apply_speckle_probability": 0.1,
+    "gaussian_mean": 0,
+    "gaussian_std": 20,
+    "salt_pepper_amount": 0.02,
+    "salt_vs_pepper": 0.5,
+    "speckle_std": 0.2,
+}
+
+# ============================
+
+LAYER_ORDER_CONFIG = {
+    # True: all objects are interleaved randomly and opacity is forced to 1.0.
+    # False: non-fracture objects are drawn first, then fractures are added last.
+    "random_layer_order": True,
+}
+
+DRAWING_CONFIG = {
+    "thickness_range": (1, 5),
+    "color_range": (151, 230),
+    "bg_color_range": (20, 150),
+    "opacity_range": (0.9, 1.0),
+    "soft_edge_probability": 0.5,
+    "soft_edge_kernels": [3, 5, 7],
+    "shape_soft_edge_kernels": [7, 11, 15],
+}
+
+CRACK_CONFIG = {
+    "start_region_divisor": 4,                      # start in center-ish region
+    "main_length_range": (100, 800),
+    "color_jitter_range": (0, 0),
+    "preferred_angle_range": (0, 2 * np.pi),
+    "angle_deviation": 0.2,
+    "preferred_angle_drift": (-0.1, 0.1),
+    "step_size_range": (1.0, 3.0),
+    "thickness_variation_range": (0.3, 2.5),
+    "branch_probability": 0.01,
+    "branch_after_step": 20,
+    "branch_side_choices": [-1, 1],
+    "branch_angle_range": (0.3, 0.8),
+    "branch_length_range": (20, 100),
+    "branch_thickness_drop_range": (1, 2),
+    "branch_angle_jitter": (-0.2, 0.2),
+    "branch_step_range": (0.8, 2.0),
+    "branch_color_jitter": (-12, 12),
+    "edge_margin": 1,
+}
+
+SHAPE_CONFIG = {
+    "smallcircle_radius_range": (1, 6),
+    "spot_radius_x_range": (2, 18),
+    "spot_radius_ratio_range": (0.4, 1.6),
+    "spot_point_count_range": (10, 22),
+    "spot_edge_perturbation": (-0.4, 0.4),
+    "circle_radius_min": 10,
+    "circle_radius_divisor": 6,
+    "square_side_range": (1, 4),                    # max side = img_size // divisor
+}
+
+LAYER_OBJECT_COUNTS = {
+    # You can set a fixed count (e.g., 0, 12) or a range tuple (min, max).
+    "fracture": (1, 20),
+    "smallcircle": (0, 100),
+    "spot": (0, 100),
+    "circle": (0, 0),
+    "rectangle": (0, 0),
+    "square": (0, 0),
+    "triangle": (0, 0),
+}
